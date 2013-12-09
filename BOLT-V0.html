@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <title>Bolt</title>
+        <LINK REL="SHORTCUT ICON" HREF="bolt.png" />
+        <script src="jquery.js"></script>
+
+        <link rel="stylesheet" href="codemirror.css">
+        <script src="codemirror.js"></script>
+        <style>
+                html,
+                body
+                {
+                        padding:0px;
+                        border:0px;
+                        margin:0px;
+                        font-family:consolas;
+                        font-size:15px;
+
+                }
+
+                #bolt
+                {
+                        position:absolute;
+                        left:0px;
+                        top:0px;
+                        height:100%;
+                        width:100%;
+                }
+
+                #window-tray,
+                #widget-tray,
+                #window-main,
+                #widget-main
+                {
+                        position:absolute;
+                        padding:0px;
+                        border:0px;
+                        margin:0px;
+                }
+
+                #tab-container{
+                        width:100%;
+                        height:100%;
+                }
+
+                .tab-l
+                {
+                        float:left;
+                        border:1px solid;
+                        width:120px;
+                        height:18px;
+                        margin:2px 0px 2px 2px;
+                }
+                .tab-r
+                {
+                        float:right;
+                        border:1px solid;
+                        width:60px;
+                        height:18px;
+                        overflow:hidden;
+                        margin:2px 0px 2px 2px;
+                }
+                #tab-b{
+                        float:left;
+                        border:1px solid;
+                        width:18px;
+                        /*width:60px;*/
+                        height:18px;
+                        margin:2px 0px 2px 2px;
+                }
+
+                #selector{
+                        border:1px solid;
+                        margin:2px;
+                        height:18px;
+                        width:144px;
+                }
+
+                .open
+                {
+                        border-bottom:0px;
+                        height:22px;
+                        z-index:09;
+                }
+
+                #window-tray
+                {
+                        border-bottom:1px solid;
+                        z-index:1000;
+                }
+
+                #widget-main{
+                        border-left:1px solid;
+                        z-index:1000;
+                }
+                #window-main{
+                        overflow-y: auto;
+                }
+
+                /*Colors*/
+
+                #window-tray,
+                #widget-tray,
+                #widget-main
+                {
+                        background-color:#ddd;
+                }
+
+                #window-main,
+                .tab-l,
+                .tab-r,
+                #tab-b,
+                #selector,
+                .open
+                {
+                        background-color:#fff;
+                }
+
+                #window-tray,
+                #widget-main,
+                .tab-l,
+                .tab-r,
+                #tab-b,
+                #selector
+                {
+                        border-color:#bbb;
+                }
+
+
+                .CodeMirror {
+                        margin:5px;
+                        border:1px solid #ccc;
+                        height:auto;
+/*                      height:100%;
+                        width:100%;*/
+                }
+                .CodeMirror-scroll {
+                        font-family:consolas;
+                        font-size:15px;
+                height: 100%;
+                overflow-y: hidden;
+                overflow-x: auto;
+        }
+        .CodeMirror-gutters { background: #ddd; border-right: 1px solid #bbb;border-top: 0px solid #bbb;margin-top:0px;padding-bottom:-4px; }
+        .CodeMirror-linenumber {color: #900;font-weight:bold;}
+                /*Testing Colors*/
+                /*#window-tray{background-color:#900;}*/
+                /*#window-main{background-color:#600;}*/
+                /*#widget-tray{background-color:#090;}*/
+                /*#widget-main{background-color:#060;}*/
+
+        </style>
+
+        <script>
+
+                function resize(){
+                        var b_s = 1;
+                        var t_h = 24;
+                        var w_w = 150;
+                        var b_h = $(window).height() > 320 ? $(window).height() : 320 ;
+                        var b_w = $(window).width() > 640 ? $(window).width() : 640;
+
+                        $('#window-tray').css({
+                                "left"   : (0) + "px",
+                                "top"    : (0) + "px",
+                                "width"  : (b_w - w_w) + "px",
+                                "height" : (t_h) + "px"
+                        });
+                        $('#widget-tray').css({
+                                "left"   : (b_w - w_w)+"px",
+                                "top"    : (0) + "px",
+                                "width"  : (w_w) + "px",
+                                "height" : (t_h) + "px"
+                        });
+                        $('#window-main').css({
+                                "left"   : (0) + "px",
+                                "top"    : (t_h +b_s) + "px",
+                                "width"  : (b_w - w_w - b_s) + "px",
+                                "height" : (b_h - t_h - b_s) + "px"
+                        });
+                        $('#widget-main').css({
+                                "left"   : (b_w - w_w - b_s) + "px",
+                                "top"    : (t_h) + "px",
+                                "width"  : (w_w) + "px",
+                                "height" : (b_h - t_h) + "px"
+                        });
+                }
+                $(window).resize(function(){
+                        resize();
+                });
+
+
+
+        </script>
+
+
+</head>
+<body>
+                <div id="bolt">
+                                <div id="window-tray">
+                                        <div id="tab-container"><a href="directory.html">
+                                                <div id="tab-b"> <img src="bolt.png"></div></a>
+                                                <div class="tab-l" style="float:right;line-height:18px;font-size:15px;color:#666;width:auto;"><strong><img src="user.png" style="float:left;vertical-align:top;margin-right:1px;margin-left:1px;">bpmccurdy&nbsp;</strong></div>
+                                                <div class="tab-r" style="line-height:18px;font-size:15px;color:#666;"><strong><img src="chat.png" style="vertical-align:top;margin-right:3px;margin-left:1px;">chat</strong></div>
+
+                                                <div class="tab-r" style="line-height:18px;font-size:15px;color:#666;"><strong><img src="code.png" style="vertical-align:top;margin-right:2px;margin-left:2px">code</strong></div>
+
+                                                <div class="tab-l open" style="color:#666;"> * file.txt</div>
+                                        </div>
+
+                                </div>
+                                <div id="widget-tray">
+                                        <div id="selector-container">
+                                                <div id="selector"></div>
+                                        </div>
+                                </div>
+                                <div id="window-main">
+                                        <textarea id="woot"></textarea>
+                                </div>
+                                <div id="widget-main"></div>
+                </div>
+<!--
+        <div id="navbar" class="navbar" style="z-index:1000;" >
+                <div id="status">
+                        <img src="./img/glyphicons_193_circle_ok.png" style="margin:7px;float:left;">
+                        <div style="">Saved!</div>
+
+                </div>
+                <div id="status">
+                        <img src="./img/glyphicons_082_roundabout.png" style="margin:7px;float:left;">
+                        <div style="">Saving..</div>
+                </div>
+                <div id="status">
+                        <img src="./img/glyphicons_248_asterisk.png" style="margin:7px;float:left;">
+                        <div style="background-color:#aaa;color:#fff;margin:8px 0px 7px 0px;padding:3px 7px 2px 5px;border-radius:5px;">Save</div><div>30</div>
+                </div>
+
+                <div class="tab-open">
+                                <input type="textfield" style="background-color:transparent;float:left;line-height:20px;height:20px;margin:-2px;font-family:monospace;font-size:17px;padding:2px;color:#aaa;border:0px;" value="sample.txt" ></input>
+                </div>
+                <div class="tab-closed">
+                        <input type="textfield" style="background-color:transparent;float:left;line-height:20px;height:20px;margin:-2px;font-family:monospace;font-size:17px;padding:2px;color:#aaa;border:0px;" value="test.txt" ></input>
+                </div>
+                <div class="tab-closed" style="float:right;">
+                        dcscsd
+                </div>
+        </div>
+        <div id="editor">
+                <div id="editor_container" class="editor_container">
+                        <textarea id="editor_field">fdjlsa;dfjsl;a</textarea>
+                </div>
+        </div>
+        -->
+
+        <script>
+
+
+                resize();
+
+                editor = CodeMirror.fromTextArea(document.getElementById('woot'), {
+                mode: 'text/java',
+                tabMode: 'indent',
+                lineNumbers: true,
+                lineWrapping: true,
+        });
+
+
+
+
+        </script>
+        <!--
+                code - directory
+                code - file
+                chat - topic
+                chat - file
+                chat - user
+                user - profile
+                user - online
+
+        -->
+
+</body>
+</html>
