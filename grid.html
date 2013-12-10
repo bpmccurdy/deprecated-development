@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<style>
+	body{
+		width:100%;
+		height:100%;
+		margin:0px;
+		padding:0px;
+		border:0px;
+		background-color:#CCC;
+		overflow:hidden;
+	}
+
+	#MAIN{
+		position:absolute;
+		left:0px;
+		top:0px;
+		width:100%;
+		height:100%;
+	}
+
+	.G{
+		position:absolute;
+		margin:-2px;
+		border:2px solid black;
+	}
+
+	</style>
+</head>
+<body>
+<!--
+//    GRID
+//    
+//    ++++++++++++++++++++++++++++
+//    +        +        +        +
+//    +   LT   +   CT   +   RT   +
+//    +        +        +        +
+//    ++++++++++++++++++++++++++++
+//    +        +        +        +
+//    +   LM   +   CM   +   RM   +
+//    +        +        +        +
+//    ++++++++++++++++++++++++++++
+//    +        +        +        +
+//    +   LB   +   CB   +   RB   +
+//    +        +        +        +
+//    ++++++++++++++++++++++++++++
+//    
+//    
+//
+//    ++++++++++++++++++++++++++++
+//    +    +       NT       +    +
+//    +    ++++++++++++++++++    +
+//    +                          +
+//    +                          +
+//    +    ++++++++++++++++++    +
+//    +    +       NM       +    +
+//    +    ++++++++++++++++++    +
+//    +                          +
+//    +                          +
+//    +    ++++++++++++++++++    +
+//    +    +       NB       +    +
+//    ++++++++++++++++++++++++++++
+//
+-->
+<div id="MAIN">
+	<div id="LT" class="G"></div>
+	<div id="CT" class="G"></div>
+	<div id="RT" class="G"></div>
+	<div id="NT" class="N"></div>
+
+	<div id="LM" class="G"></div>
+	<div id="CM" class="G"></div>
+	<div id="RM" class="G"></div>
+	<div id="NM" class="N"></div>
+
+	<div id="LB" class="G"></div>
+	<div id="CB" class="G"></div>
+	<div id="RB" class="G"></div>
+	<div id="NB" class="N"></div>
+</div>
+	<script>
+	var G = (function(){
+		var self = this;
+		var L = 0;
+		var R = 0;
+		var T = 0;
+		var B = 0;
+
+		var LT = {};
+		var CT = {};
+		var RT = {};
+		
+		var LM = {};
+		var CM = {};
+		var RM = {};
+
+		var LB = {};
+		var CB = {};
+		var RB = {};
+
+		this.LT = document.getElementById("LT");
+		this.CT = document.getElementById("CT");
+		this.RT = document.getElementById("RT");
+		this.NT = document.getElementById("NT");
+
+		this.LM = document.getElementById("LM");
+		this.CM = document.getElementById("CM");
+		this.RM = document.getElementById("RM");
+		this.NM = document.getElementById("NM");
+
+		this.LB = document.getElementById("LB");
+		this.CB = document.getElementById("CB");
+		this.RB = document.getElementById("RB");
+		this.NB = document.getElementById("NB");
+	
+		var resize = function(){
+			var W = document.getElementById("MAIN").offsetWidth;
+			var H = document.getElementById("MAIN").offsetHeight;
+			var C = W - L - R;
+			var M = H - T - B;
+
+			self.LT.style.left 		= (0) + "px";
+			self.LT.style.top 		= (0) + "px";
+			self.LT.style.width 	= (L) + "px";
+			self.LT.style.height 	= (T) + "px";
+
+			self.CT.style.left 		= (L) + "px";
+			self.CT.style.top 		= (0) + "px";
+			self.CT.style.width 	= (C) + "px";
+			self.CT.style.height 	= (T) + "px";
+
+			self.RT.style.left 		= (L + C) + "px";
+			self.RT.style.top 		= (0) + "px";
+			self.RT.style.width 	= (R) + "px";
+			self.RT.style.height 	= (T) + "px";
+
+			self.LM.style.left 		= (0) + "px";
+			self.LM.style.top 		= (T) + "px";
+			self.LM.style.width 	= (L) + "px";
+			self.LM.style.height 	= (M) + "px";
+
+			self.CM.style.left 		= (L) + "px";
+			self.CM.style.top 		= (T) + "px";
+			self.CM.style.width 	= (C) + "px";
+			self.CM.style.height 	= (M) + "px";
+
+			self.RM.style.left 		= (L + C) + "px";
+			self.RM.style.top 		= (T) + "px";
+			self.RM.style.width 	= (R) + "px";
+			self.RM.style.height 	= (M) + "px";
+
+			self.LB.style.left 		= (0) + "px";
+			self.LB.style.top 		= (T + M) + "px";
+			self.LB.style.width 	= (L) + "px";
+			self.LB.style.height 	= (B) + "px";
+
+			self.CB.style.left 		= (L)+ "px";
+			self.CB.style.top 		= (T + M) + "px";
+			self.CB.style.width 	= (C) + "px";
+			self.CB.style.height 	= (B) + "px";
+
+			self.RB.style.left 		= (L + C) + "px";
+			self.RB.style.top 		= (T + M) + "px";
+			self.RB.style.width 	= (R) + "px";
+			self.RB.style.height 	= (B) + "px";
+		}
+
+		this.L = function(size){
+			L = size;
+			resize();
+		}
+
+		this.R = function(size){
+			R = size;
+			resize();
+		}
+
+		this.T = function(size){
+			T = size;
+			resize();
+		}
+
+		this.B = function(size){
+			B = size;
+			resize();
+		}
+		window.onresize = resize;
+
+		return this;
+	})();
+
+	G.L(100);
+	G.R(100);
+	G.T(100);
+	G.B(100);
+	</script>
+</body>
+</html>
