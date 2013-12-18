@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>JSON VIEWER</title>
+</head>
+
+<body>
+<h1>JSON VIEWER FOR PUBLIC APIS</h1>
+<input id="input" type="text" placeholder="URL" style="width: 100%; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;">
+<pre id="json" style="width:100%;border:1px solid black; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;">
+
+</pre>
+<script>
+function change(){
+	url = document.getElementById("input").value;
+	function callback(data){
+	document.getElementById("json").innerHTML = JSON.stringify(data,undefined,2);
+	}
+	var x;
+	if (window.XMLHttpRequest){x=new XMLHttpRequest();}
+	else{x=new ActiveXObject("Microsoft.XMLHTTP");}
+	x.onreadystatechange = function() {
+		if (x.readyState == 4 && x.status == 200) {
+		  	callback(JSON.parse(x.responseText));
+		 }
+	};		  	
+	x.open("GET", url, true);
+	x.setRequestHeader("Authorization", auth);
+	x.send();
+}
+document.getElementById("input").onkeydown = change;
+document.getElementById("input").onkeyup = change;
+document.getElementById("input").onkeypress = change;
+document.getElementById("input").onclick = change;
+document.getElementById("input").addEventListener ("paste", change, false);
+</script>
+</body>
+
+</html>
