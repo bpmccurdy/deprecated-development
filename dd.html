@@ -1,16 +1,16 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Code</title>
+  <title>Convert</title>
   
   <style>
 
 
-#drop { border: 10px dashed #ccc; width: 300px; min-height: 300px; margin: 20px auto;}
-#drop.hover { border: 10px dashed #0c0; }
-#drop img { display: block; margin: 10px auto; }
-#drop p { margin: 10px; font-size: 14px; }
+    #drop { border: 10px dashed #ccc; width: 300px; min-height: 300px; margin: 20px auto;}
+    #drop.hover { border: 10px dashed #0c0; }
+    #drop img { display: block; margin: 10px auto; }
+    #drop p { margin: 10px; font-size: 14px; }
   </style>
   <script>
       
@@ -18,59 +18,53 @@
 </head>
 
 <body>
-
-  <h1 align=center>A File Preview Demo</h1>
+  <h1 align=center>Convert</h1>
   <DIV id="status">Drag the files from a folder to a selected area ...</DIV>
-  <DIV id="drop">Drop files here.</DIV>
+  <DIV id="drop">Drop ROM here.</DIV>
   <DIV id="list"></DIV>
 <script>
-    
-    
-    if(window.FileReader) { 
- var drop; 
- addEventHandler(window, 'load', function() {
-    var status = document.getElementById('status');
-    drop   = document.getElementById('drop');
-    var list   = document.getElementById('list');
+if(window.FileReader) { 
+  var drop; 
+  addEventHandler(window, 'load', function() {
+  var status = document.getElementById('status');
+  drop = document.getElementById('drop');
+  var list = document.getElementById('list');
   	
-    function cancel(e) {
-      if (e.preventDefault) { e.preventDefault(); }
-      return false;
-    }
-  
-    // Tells the browser that we *can* drop on this target
-    addEventHandler(drop, 'dragover', cancel);
-    addEventHandler(drop, 'dragenter', cancel);
-
-addEventHandler(drop, 'drop', function (e) {
-  e = e || window.event; // get window.event if e argument missing (in IE)   
-  if (e.preventDefault) { e.preventDefault(); } // stops the browser from redirecting off to the image.
-
-  var dt    = e.dataTransfer;
-  var files = dt.files;
-  for (var i=0; i<files.length; i++) {
-    var file = files[i];
-    var reader = new FileReader();
-      
-    //attach event handlers here...
-   
-    reader.readAsDataURL(file);
-addEventHandler(reader, 'loadend', function(e, file) {
-    var bin           = this.result; 
-    var newFile       = document.createElement('div');
-    newFile.innerHTML = 'Loaded : '+file.name+' size '+file.size+' B';
-    list.appendChild(newFile);  
-    var fileNumber = list.getElementsByTagName('div').length;
-    status.innerHTML = fileNumber < files.length 
-                     ? 'Loaded 100% of file '+fileNumber+' of '+files.length+'...' 
-                     : 'Done loading. processed '+fileNumber+' files.';
-
-    var img = document.createElement("img"); 
-    img.file = file;   
-    img.src = bin;
-    list.appendChild(img);
-}.bindToEventHandler(file));
+  function cancel(e) {
+    if (e.preventDefault) { e.preventDefault(); }
+    return false;
   }
+  
+  // Tells the browser that we *can* drop on this target
+  addEventHandler(drop, 'dragover', cancel);
+  addEventHandler(drop, 'dragenter', cancel);
+
+  addEventHandler(drop, 'drop', function (e) {
+    e = e || window.event; // get window.event if e argument missing (in IE)   
+    if (e.preventDefault) { e.preventDefault(); } // stops the browser from redirecting off to the image.
+
+    var dt    = e.dataTransfer;
+    var files = dt.files;
+    for (var i=0; i<files.length; i++) {
+      var file = files[i];
+      var reader = new FileReader();
+      
+      //attach event handlers here...
+   
+      reader.readAsDataURL(file);
+      addEventHandler(reader, 'loadend', function(e, file) {
+        var bin           = this.result; 
+        var newFile       = document.createElement('div');
+        newFile.innerHTML = 'Loaded : '+file.name+' size '+file.size+' B';
+        list.appendChild(newFile);  
+        var fileNumber = list.getElementsByTagName('div').length;
+        status.innerHTML = fileNumber < files.length ? 'Loaded 100% of file '+fileNumber+' of '+files.length+'...' : 'Done loading. processed '+fileNumber+' files.';
+        var img = document.createElement("img"); 
+        img.file = file;   
+        img.src = bin;
+        list.appendChild(img);
+      }.bindToEventHandler(file));
+    }
   return false;
 });
 Function.prototype.bindToEventHandler = function bindToEventHandler() {
@@ -78,12 +72,12 @@ Function.prototype.bindToEventHandler = function bindToEventHandler() {
   var boundParameters = Array.prototype.slice.call(arguments);
   //create closure
   return function(e) {
-      e = e || window.event; // get window.event if e argument missing (in IE)   
-      boundParameters.unshift(e);
-      handler.apply(this, boundParameters);
-  }
-};
-  });
+    e = e || window.event; // get window.event if e argument missing (in IE)   
+    boundParameters.unshift(e);
+    handler.apply(this, boundParameters);
+    }
+  };
+});
 } else { 
   document.getElementById('status').innerHTML = 'Your browser does not support the HTML5 FileReader.';
 }
