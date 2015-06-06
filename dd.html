@@ -35,6 +35,9 @@ if(window.FileReader) {
     return false;
   }
   
+  drop.ondragover = function () { drop.className = 'hover'; return false; };
+  drop.ondragend = function () { drop.className = ''; return false; };
+  
   // Tells the browser that we *can* drop on this target
   addEventHandler(drop, 'dragover', cancel);
   addEventHandler(drop, 'dragenter', cancel);
